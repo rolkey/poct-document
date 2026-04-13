@@ -1,0 +1,74 @@
+@startmindmap 功能总结
+scale 2
+
+<style>
+mindmapDiagram {
+  node {
+    BackgroundColor #e8e279  /* 所有节点默认背景色 */
+    ' FontColor white          /* 默认字体颜色 */
+  }
+  .notPlan {
+    BackgroundColor #3364CA
+    FontColor white
+  }
+  .plant {
+    BackgroundColor #3364CA
+    FontColor white
+  }
+  .main {
+    BackgroundColor #e8e279
+    fontSize 20px
+  }
+  .questen {
+    BackgroundColor #ed717a
+    FontColor white
+  }
+  .success {
+    BackgroundColor Green
+    FontColor white
+  }
+  .adviceItems {
+    BackgroundColor #6323eb
+    FontColor white
+  }
+}
+</style>
+
++ POCT管理系统
+
+++ 检验管理（1个半月）
+
+++ 质控管理（2周）
++++ 质控物管理（库存/质控物检测项目）
++++ 质控规则
++++ 质控项目
++++ 质控计划
+
+++ 接口
++++ HIS接口
++++ 设备接口
+
+++ 系统维护
++++ 权限设置（角色管理：要配置角色可以管理的分组，在分组）
++++ 用户管理
++++ 修改密码
++++ 重新登录
++++ 退出系统
+
+-- 仪器管理（1周）
+--- 仪器登记
+--- 仪器维护
+
+-- 考核管理（2周）
+--- 人员管理
+--- 考题管理
+--- 培训记录
+--- 人员考核
+
+-- 框架搭建（1周）
+--- 报表模块
+--- 微服务环境
+--- 微服前端环境
+--- 权限功能细化
+
+@endmindmap

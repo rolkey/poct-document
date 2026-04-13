@@ -1,0 +1,69 @@
+@startmindmap 基础功能分析
+scale 2
+
+<style>
+mindmapDiagram {
+  node {
+    BackgroundColor #e8e279  /* 所有节点默认背景色 */
+    ' FontColor white          /* 默认字体颜色 */
+  }  
+  .notPlan {
+    BackgroundColor #3364CA
+    FontColor white
+  }
+  .plant {
+    BackgroundColor #3364CA
+    FontColor white
+  }
+  .main {
+    BackgroundColor #e8e279
+    fontSize 20px
+  }
+  .questen {
+    BackgroundColor #ed717a
+    FontColor white
+  }
+  .success {
+    BackgroundColor Green
+    FontColor white
+  }
+  .adviceItems {
+    BackgroundColor #6323eb
+    FontColor white
+  }
+}
+</style>
+
++ 检验系统
+
+++ 检验配置
++++ 检验项目（中文信息/通道）
++++ 分组设置（科室/报表格式）
++++ 收费项目
+++++ 每个分组有多个收费项目
+++++ 每个收费项目关联多个检验项目
+
++++ 检验规则
+++++ 定性/定量
+
+++ 仪器管理
++++ 仪器信息（通道/检验项目）
++++ 仪器维修记录
+
+-- 标本接收
+--- 标本接收表
+--- 标本项目
+
+-- 检验报告
+--- 添加样本号（同界面）
+--- 样本报告
+
+-- 质控管理
+--- 质控样本
+--- 质控样本库存（二期） <<notPlan>>
+--- 质控规则
+--- 质控计划
+--- 质控数据
+
+
+@endmindmap
