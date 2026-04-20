@@ -1,7 +1,6 @@
 -- 表: bis_blood_cross_list (bis_blood_cross_list)
 CREATE TABLE bis_blood_cross_list (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  cross_id VARCHAR(255) COMMENT '交叉ID',
+  cross_id BIGINT COMMENT '交叉ID',
   inspection_id VARCHAR(255) COMMENT '检验ID',
   in_credit_id VARCHAR(255) COMMENT '血液入库库存ID',
   method_type_id VARCHAR(255) COMMENT '检验方法',
@@ -27,8 +26,7 @@ CREATE TABLE bis_blood_cross_list (
 
 -- 表: bis_blood_input (血液出入库信息表)
 CREATE TABLE bis_blood_input (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  in_credit_id VARCHAR(255) COMMENT '血液入库库存ID',
+  in_credit_id BIGINT COMMENT '血液入库库存ID',
   blood_type_id VARCHAR(255) COMMENT '血液类型id',
   blood_bag_id VARCHAR(255) COMMENT '血袋号',
   in_date VARCHAR(255) COMMENT '入库日期',
@@ -84,8 +82,7 @@ CREATE TABLE bis_blood_input (
 
 -- 表: bis_blood_packing_class (bis_blood_packing_class)
 CREATE TABLE bis_blood_packing_class (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  pack_class_id VARCHAR(255) COMMENT 'ID',
+  pack_class_id BIGINT COMMENT 'ID',
   blood_type_id VARCHAR(255) COMMENT '血液类型id',
   pack_class_sort VARCHAR(255) COMMENT '排序号',
   packing_amount VARCHAR(255) COMMENT '包装量',
@@ -97,7 +94,6 @@ CREATE TABLE bis_blood_packing_class (
 
 -- 表: bis_blood_type (bis_blood_type)
 CREATE TABLE bis_blood_type (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
   sort VARCHAR(255) COMMENT '排序号',
   blood_name VARCHAR(255) COMMENT '血液单位',
   blood_unit VARCHAR(255) COMMENT '血液名称',
@@ -118,8 +114,7 @@ CREATE TABLE bis_blood_type (
 
 -- 表: bis_test_method_type (bis_test_method_type)
 CREATE TABLE bis_test_method_type (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  type_id VARCHAR(255) COMMENT '配血类型ID（3配血法，血液处理法）',
+  type_id BIGINT COMMENT '配血类型ID（3配血法，血液处理法）',
   sort VARCHAR(255) COMMENT '排序号',
   chinese_name VARCHAR(255) COMMENT '配血方法名称',
   his_id VARCHAR(255) COMMENT 'HIS代码',
@@ -134,8 +129,7 @@ CREATE TABLE bis_test_method_type (
 
 -- 表: his_requisition (his_requisition)
 CREATE TABLE his_requisition (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  his_id VARCHAR(255) COMMENT '医嘱代码',
+  his_id BIGINT COMMENT '医嘱代码',
   requisition_id VARCHAR(255) COMMENT '申请单ID',
   patient_type VARCHAR(255) COMMENT '病人类别（1住院、2门诊、3住院急诊、4门诊急诊、5体检、10质控）',
   outpatient_id VARCHAR(255) COMMENT '病人ID',
@@ -200,8 +194,7 @@ CREATE TABLE his_requisition (
 
 -- 表: lis_base_data (基础数据表（科别、医生、标本种类）)
 CREATE TABLE lis_base_data (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  base_data_id VARCHAR(255) COMMENT '基础数据ID',
+  base_data_id BIGINT COMMENT '基础数据ID',
   class_id VARCHAR(255) COMMENT '字典类型',
   base_data_sort VARCHAR(255) COMMENT '排序号',
   chinese_name VARCHAR(255) COMMENT '中文名称',
@@ -220,7 +213,6 @@ CREATE TABLE lis_base_data (
 
 -- 表: lis_base_data_group (各分组基础数据表)
 CREATE TABLE lis_base_data_group (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
   spell_code VARCHAR(255) COMMENT '拼音码',
   stroke_code VARCHAR(255) COMMENT '五笔码',
   standard_name VARCHAR(255) COMMENT '标准名称',
@@ -232,7 +224,6 @@ CREATE TABLE lis_base_data_group (
 
 -- 表: lis_change_log (一般检验修改日志表)
 CREATE TABLE lis_change_log (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
   serial_no VARCHAR(255) COMMENT '日志ID',
   module_type VARCHAR(255) COMMENT '操作模块类型',
   change_type VARCHAR(255) COMMENT '日志类型',
@@ -248,8 +239,7 @@ CREATE TABLE lis_change_log (
 
 -- 表: lis_change_log_micro (微生物系统修改日志表)
 CREATE TABLE lis_change_log_micro (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  id VARCHAR(255) COMMENT '日志ID',
+  id BIGINT COMMENT '日志ID',
   change_id VARCHAR(255) COMMENT '诊疗项目代码',
   change_soft VARCHAR(255) COMMENT '修改模块',
   change_person VARCHAR(255) COMMENT '修改人员',
@@ -260,8 +250,7 @@ CREATE TABLE lis_change_log_micro (
 
 -- 表: lis_charge_item (诊疗项目对照项目表)
 CREATE TABLE lis_charge_item (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  charge_item_id VARCHAR(255) COMMENT '诊疗项目ID',
+  charge_item_id BIGINT COMMENT '诊疗项目ID',
   chinese_name VARCHAR(255) COMMENT '诊疗项目名称',
   chinese_name_short VARCHAR(255) COMMENT '诊疗项目简称',
   english_name VARCHAR(255) COMMENT '诊疗项目英文名称',
@@ -297,7 +286,6 @@ CREATE TABLE lis_charge_item (
 
 -- 表: lis_charge_item_charge (lis_charge_item_charge)
 CREATE TABLE lis_charge_item_charge (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
   charge_class VARCHAR(255) COMMENT '收费类型',
   his_id VARCHAR(255) COMMENT 'HIS代码',
   charge_name VARCHAR(255) COMMENT '收费名称',
@@ -306,7 +294,6 @@ CREATE TABLE lis_charge_item_charge (
 
 -- 表: lis_charge_item_inspectiontime (lis_charge_item_inspectiontime)
 CREATE TABLE lis_charge_item_inspectiontime (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
   time_type VARCHAR(255) COMMENT '超时类型',
   patient_type VARCHAR(255) COMMENT '病人类型',
   id VARCHAR(255) COMMENT '主键',
@@ -316,7 +303,6 @@ CREATE TABLE lis_charge_item_inspectiontime (
 
 -- 表: lis_charge_item_reporttime (lis_charge_item_reporttime)
 CREATE TABLE lis_charge_item_reporttime (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
   charge_item_id VARCHAR(255) COMMENT '诊疗项目ID',
   from_time VARCHAR(255) COMMENT '开始时间',
   to_time VARCHAR(255) COMMENT '结束时间',
@@ -329,21 +315,19 @@ CREATE TABLE lis_charge_item_reporttime (
 
 -- 表: lis_comm_instrument (lis_comm_instrument)
 CREATE TABLE lis_comm_instrument (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  instrument_id VARCHAR(255) COMMENT '仪器代码',
+  instrument_id BIGINT COMMENT '仪器代码',
+  instrument_name VARCHAR(255) COMMENT '仪器名称',
   instrument_key_date VARCHAR(255) COMMENT '注册时间',
   instrument_type VARCHAR(255) COMMENT '仪器类型',
   interface_name VARCHAR(255) COMMENT '接口程序',
   interface_type VARCHAR(255) COMMENT '通讯方式',
-  instrument_name VARCHAR(255) COMMENT '仪器名称',
-  instrument_commport VARCHAR(255) COMMENT '使用端口号',
+  instrument_commport VARCHAR(255) COMMENT '端口配置',
   instrument_key VARCHAR(255) COMMENT 'key'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='仪器通讯配置';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='仪器表';
 
 -- 表: lis_inspection_group (检验分组信息表)
 CREATE TABLE lis_inspection_group (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  group_id VARCHAR(255) COMMENT '分组ID',
+  group_id BIGINT COMMENT '分组ID',
   group_code VARCHAR(255) COMMENT '分组代码',
   group_sort VARCHAR(255) COMMENT '排序号',
   group_name VARCHAR(255) COMMENT '分组名称',
@@ -363,8 +347,7 @@ CREATE TABLE lis_inspection_group (
 
 -- 表: lis_inspection_report (检验报告单信息表)
 CREATE TABLE lis_inspection_report (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  inspection_id VARCHAR(255) COMMENT '检验单ID',
+  inspection_id BIGINT COMMENT '检验单ID',
   report_id VARCHAR(255) COMMENT '报告序号（页码）',
   report_format VARCHAR(255) COMMENT '报告单模板',
   report_file VARCHAR(255) COMMENT '报告单文件',
@@ -376,8 +359,7 @@ CREATE TABLE lis_inspection_report (
 
 -- 表: lis_inspection_result (常规检验结果表)
 CREATE TABLE lis_inspection_result (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  inspection_id VARCHAR(255) COMMENT '检验单ID',
+  inspection_id BIGINT COMMENT '检验单ID',
   test_item_id VARCHAR(255) COMMENT '项目代码',
   group_id VARCHAR(255) COMMENT '分组ID',
   inspection_date VARCHAR(255) COMMENT '检验日期',
@@ -411,8 +393,7 @@ CREATE TABLE lis_inspection_result (
 
 -- 表: lis_inspection_result_micro (微生物检验结果表)
 CREATE TABLE lis_inspection_result_micro (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  inspection_id VARCHAR(255) COMMENT '检验单ID',
+  inspection_id BIGINT COMMENT '检验单ID',
   group_id VARCHAR(255) COMMENT '分组ID',
   inspection_date VARCHAR(255) COMMENT '检验日期',
   inspection_time VARCHAR(255) COMMENT '检验时间',
@@ -440,8 +421,7 @@ CREATE TABLE lis_inspection_result_micro (
 
 -- 表: lis_inspection_sample (样本信息表（主表）)
 CREATE TABLE lis_inspection_sample (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  inspection_id VARCHAR(255) COMMENT '检验单ID',
+  inspection_id BIGINT COMMENT '检验单ID',
   group_id VARCHAR(255) COMMENT '分组ID',
   inspection_date VARCHAR(255) COMMENT '检验日期（样本编号时自动生成）',
   inspection_time VARCHAR(255) COMMENT '检验时间（样本编号时自动生成）',
@@ -527,8 +507,7 @@ CREATE TABLE lis_inspection_sample (
 
 -- 表: lis_inspection_sample_charge (标本收费记录表)
 CREATE TABLE lis_inspection_sample_charge (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  sample_charge_id VARCHAR(255) COMMENT '收费ID',
+  sample_charge_id BIGINT COMMENT '收费ID',
   requisition_id VARCHAR(255) COMMENT '申请单ID',
   inspection_id VARCHAR(255) COMMENT '检验单ID',
   charge_item_id VARCHAR(255) COMMENT '收费项目ID',
@@ -547,16 +526,14 @@ CREATE TABLE lis_inspection_sample_charge (
 
 -- 表: lis_inspection_sample_explain (备注信息表)
 CREATE TABLE lis_inspection_sample_explain (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  inspection_id VARCHAR(255) COMMENT '检验单ID',
+  inspection_id BIGINT COMMENT '检验单ID',
   explain_id VARCHAR(255) COMMENT '解释ID，跟lis_base_data关联',
   explain VARCHAR(255) COMMENT '结果解释'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='备注信息表';
 
 -- 表: lis_inspection_sample_graph (样本图形信息表)
 CREATE TABLE lis_inspection_sample_graph (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  inspection_id VARCHAR(255) COMMENT '检验单ID',
+  inspection_id BIGINT COMMENT '检验单ID',
   inspection_date VARCHAR(255) COMMENT '检验日期',
   inspection_instrument VARCHAR(255) COMMENT '检验仪器',
   graph_format VARCHAR(255) COMMENT '图片格式',
@@ -565,8 +542,7 @@ CREATE TABLE lis_inspection_sample_graph (
 
 -- 表: lis_test_item (检验项目明细字典表)
 CREATE TABLE lis_test_item (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  test_item_id VARCHAR(255) COMMENT '项目ID',
+  test_item_id BIGINT COMMENT '项目ID',
   test_item_code VARCHAR(255) COMMENT '项目代码',
   test_item_sort VARCHAR(255) COMMENT '排序号',
   chinese_name VARCHAR(255) COMMENT '中文名称',
@@ -600,7 +576,6 @@ CREATE TABLE lis_test_item (
 
 -- 表: lis_test_item_combination (lis_test_item_combination)
 CREATE TABLE lis_test_item_combination (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
   serial_no VARCHAR(255) COMMENT '排序',
   combination_id VARCHAR(255) COMMENT '组合ID',
   combination_sort VARCHAR(255) COMMENT '排序号',
@@ -618,8 +593,7 @@ CREATE TABLE lis_test_item_combination (
 
 -- 表: lis_test_item_group (各仪器开展检验项目明细表)
 CREATE TABLE lis_test_item_group (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  group_id VARCHAR(255) COMMENT '分组ID',
+  group_id BIGINT COMMENT '分组ID',
   test_item_id VARCHAR(255) COMMENT '项目ID',
   test_item_sort VARCHAR(255) COMMENT '排序',
   test_item_type VARCHAR(255) COMMENT '项目类型',
@@ -634,7 +608,6 @@ CREATE TABLE lis_test_item_group (
 
 -- 表: sys_user (用户信息表)
 CREATE TABLE sys_user (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
   user_no VARCHAR(255) COMMENT '用户id',
   logid VARCHAR(255) COMMENT '登录名',
   username VARCHAR(255) COMMENT '用户名称',
