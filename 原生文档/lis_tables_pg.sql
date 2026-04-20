@@ -21,9 +21,21 @@ CREATE TABLE bis_blood_cross_list (
   check_person VARCHAR(255),
   check_time VARCHAR(255),
   cross_remark VARCHAR(255),
-  cross_amount VARCHAR(255)
+  cross_amount VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE bis_blood_cross_list IS '交叉配血记录';
+COMMENT ON COLUMN bis_blood_cross_list.create_dept IS '创建部门';
+COMMENT ON COLUMN bis_blood_cross_list.create_by IS '创建人';
+COMMENT ON COLUMN bis_blood_cross_list.create_time IS '创建时间';
+COMMENT ON COLUMN bis_blood_cross_list.update_by IS '修改人';
+COMMENT ON COLUMN bis_blood_cross_list.update_time IS '修改时间';
+COMMENT ON COLUMN bis_blood_cross_list.tenant_id IS '分院ID';
 COMMENT ON COLUMN bis_blood_cross_list.cross_id IS '交叉ID';
 COMMENT ON COLUMN bis_blood_cross_list.inspection_id IS '检验ID';
 COMMENT ON COLUMN bis_blood_cross_list.in_credit_id IS '血液入库库存ID';
@@ -100,9 +112,21 @@ CREATE TABLE bis_blood_input (
   charge_num VARCHAR(255),
   receive_time VARCHAR(255),
   lastmodify VARCHAR(255),
-  blood_id VARCHAR(255)
+blood_id VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE bis_blood_input IS '血液出入库信息表';
+COMMENT ON COLUMN bis_blood_input.create_dept IS '创建部门';
+COMMENT ON COLUMN bis_blood_input.create_by IS '创建人';
+COMMENT ON COLUMN bis_blood_input.create_time IS '创建时间';
+COMMENT ON COLUMN bis_blood_input.update_by IS '修改人';
+COMMENT ON COLUMN bis_blood_input.update_time IS '修改时间';
+COMMENT ON COLUMN bis_blood_input.tenant_id IS '分院ID';
 COMMENT ON COLUMN bis_blood_input.in_credit_id IS '血液入库库存ID';
 COMMENT ON COLUMN bis_blood_input.blood_type_id IS '血液类型id';
 COMMENT ON COLUMN bis_blood_input.blood_bag_id IS '血袋号';
@@ -165,9 +189,21 @@ CREATE TABLE bis_blood_packing_class (
   corresponding_id VARCHAR(255),
   cost VARCHAR(255),
   charge VARCHAR(255),
-  state_flag VARCHAR(255)
+  state_flag VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE bis_blood_packing_class IS '血液包装分类';
+COMMENT ON COLUMN bis_blood_packing_class.create_dept IS '创建部门';
+COMMENT ON COLUMN bis_blood_packing_class.create_by IS '创建人';
+COMMENT ON COLUMN bis_blood_packing_class.create_time IS '创建时间';
+COMMENT ON COLUMN bis_blood_packing_class.update_by IS '修改人';
+COMMENT ON COLUMN bis_blood_packing_class.update_time IS '修改时间';
+COMMENT ON COLUMN bis_blood_packing_class.tenant_id IS '分院ID';
 COMMENT ON COLUMN bis_blood_packing_class.pack_class_id IS 'ID';
 COMMENT ON COLUMN bis_blood_packing_class.blood_type_id IS '血液类型id';
 COMMENT ON COLUMN bis_blood_packing_class.pack_class_sort IS '排序号';
@@ -194,9 +230,21 @@ CREATE TABLE bis_blood_type (
   custom_code VARCHAR(255),
   spell_code VARCHAR(255),
   state_flag VARCHAR(255),
-  blood_type_id VARCHAR(255)
+  blood_type_id VARCHAR(10),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE bis_blood_type IS '血液类型';
+COMMENT ON COLUMN bis_blood_type.create_dept IS '创建部门';
+COMMENT ON COLUMN bis_blood_type.create_by IS '创建人';
+COMMENT ON COLUMN bis_blood_type.create_time IS '创建时间';
+COMMENT ON COLUMN bis_blood_type.update_by IS '修改人';
+COMMENT ON COLUMN bis_blood_type.update_time IS '修改时间';
+COMMENT ON COLUMN bis_blood_type.tenant_id IS '分院ID';
 COMMENT ON COLUMN bis_blood_type.sort IS '排序号';
 COMMENT ON COLUMN bis_blood_type.blood_name IS '血液单位';
 COMMENT ON COLUMN bis_blood_type.blood_unit IS '血液名称';
@@ -226,9 +274,21 @@ CREATE TABLE bis_test_method_type (
   spell_code VARCHAR(255),
   reside_class VARCHAR(255),
   state_flag VARCHAR(255),
-  method_type_id VARCHAR(255)
+  method_type_id VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE bis_test_method_type IS '配血方法类型';
+COMMENT ON COLUMN bis_test_method_type.create_dept IS '创建部门';
+COMMENT ON COLUMN bis_test_method_type.create_by IS '创建人';
+COMMENT ON COLUMN bis_test_method_type.create_time IS '创建时间';
+COMMENT ON COLUMN bis_test_method_type.update_by IS '修改人';
+COMMENT ON COLUMN bis_test_method_type.update_time IS '修改时间';
+COMMENT ON COLUMN bis_test_method_type.tenant_id IS '分院ID';
 COMMENT ON COLUMN bis_test_method_type.type_id IS '配血类型ID（3配血法，血液处理法）';
 COMMENT ON COLUMN bis_test_method_type.sort IS '排序号';
 COMMENT ON COLUMN bis_test_method_type.chinese_name IS '配血方法名称';
@@ -303,9 +363,21 @@ CREATE TABLE his_requisition (
   send_time VARCHAR(255),
   Residential_address VARCHAR(255),
   Residential_address2 VARCHAR(255),
-  mobile_no VARCHAR(255)
+  mobile_no VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE his_requisition IS '医嘱申请';
+COMMENT ON COLUMN his_requisition.create_dept IS '创建部门';
+COMMENT ON COLUMN his_requisition.create_by IS '创建人';
+COMMENT ON COLUMN his_requisition.create_time IS '创建时间';
+COMMENT ON COLUMN his_requisition.update_by IS '修改人';
+COMMENT ON COLUMN his_requisition.update_time IS '修改时间';
+COMMENT ON COLUMN his_requisition.tenant_id IS '分院ID';
 COMMENT ON COLUMN his_requisition.his_id IS '医嘱代码';
 COMMENT ON COLUMN his_requisition.requisition_id IS '申请单ID';
 COMMENT ON COLUMN his_requisition.patient_type IS '病人类别（1住院、2门诊、3住院急诊、4门诊急诊、5体检、10质控）';
@@ -370,28 +442,43 @@ COMMENT ON COLUMN his_requisition.mobile_no IS '手机号码';
 
 -- 表: lis_base_data (基础数据表（科别、医生、标本种类）)
 CREATE TABLE lis_base_data (
-  base_data_id BIGINT,
-  class_id VARCHAR(255),
-  base_data_sort VARCHAR(255),
-  chinese_name VARCHAR(255),
-  english_name VARCHAR(255),
-  his_id BIGINT,
-  standart_id VARCHAR(255),
-  custom_code VARCHAR(255),
-  spell_code VARCHAR(255),
-  stroke_code VARCHAR(255),
-  state_flag VARCHAR(255),
-  custom01 VARCHAR(255),
-  custom02 VARCHAR(255),
-  custom03 VARCHAR(255),
-  custom04 VARCHAR(255)
+  base_data_id VARCHAR(10) NOT NULL,
+  class_id VARCHAR(20),
+  base_data_sort VARCHAR(20),
+  chinese_name VARCHAR(400),
+  english_name VARCHAR(50),
+  lis_id VARCHAR(20),
+  his_id VARCHAR(20),
+  standart_id VARCHAR(20),
+  custom_code VARCHAR(20),
+  spell_code VARCHAR(20),
+  stroke_code VARCHAR(20),
+  state_flag VARCHAR(2),
+  custom01 VARCHAR(50),
+  custom02 VARCHAR(50),
+  custom03 VARCHAR(50),
+  custom04 VARCHAR(50),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20),
+  PRIMARY KEY (base_data_id)
 );
 COMMENT ON TABLE lis_base_data IS '基础数据表（科别、医生、标本种类）';
+COMMENT ON COLUMN lis_base_data.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_base_data.create_by IS '创建人';
+COMMENT ON COLUMN lis_base_data.create_time IS '创建时间';
+COMMENT ON COLUMN lis_base_data.update_by IS '修改人';
+COMMENT ON COLUMN lis_base_data.update_time IS '修改时间';
+COMMENT ON COLUMN lis_base_data.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_base_data.base_data_id IS '基础数据ID';
 COMMENT ON COLUMN lis_base_data.class_id IS '字典类型';
 COMMENT ON COLUMN lis_base_data.base_data_sort IS '排序号';
 COMMENT ON COLUMN lis_base_data.chinese_name IS '中文名称';
 COMMENT ON COLUMN lis_base_data.english_name IS '英文名称';
+COMMENT ON COLUMN lis_base_data.lis_id IS '老系统代码';
 COMMENT ON COLUMN lis_base_data.his_id IS 'HIS代码';
 COMMENT ON COLUMN lis_base_data.standart_id IS '标准代码';
 COMMENT ON COLUMN lis_base_data.custom_code IS '自定义码';
@@ -411,9 +498,21 @@ CREATE TABLE lis_base_data_group (
   group_id BIGINT,
   custom_code VARCHAR(255),
   base_data_sort VARCHAR(255),
-  base_data_id VARCHAR(255)
+  base_data_id VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_base_data_group IS '各分组基础数据表';
+COMMENT ON COLUMN lis_base_data_group.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_base_data_group.create_by IS '创建人';
+COMMENT ON COLUMN lis_base_data_group.create_time IS '创建时间';
+COMMENT ON COLUMN lis_base_data_group.update_by IS '修改人';
+COMMENT ON COLUMN lis_base_data_group.update_time IS '修改时间';
+COMMENT ON COLUMN lis_base_data_group.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_base_data_group.spell_code IS '拼音码';
 COMMENT ON COLUMN lis_base_data_group.stroke_code IS '五笔码';
 COMMENT ON COLUMN lis_base_data_group.standard_name IS '标准名称';
@@ -434,9 +533,21 @@ CREATE TABLE lis_change_log (
   change_person VARCHAR(255),
   change_time VARCHAR(255),
   change_place VARCHAR(255),
-  remark VARCHAR(255)
+  remark VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_change_log IS '一般检验修改日志表';
+COMMENT ON COLUMN lis_change_log.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_change_log.create_by IS '创建人';
+COMMENT ON COLUMN lis_change_log.create_time IS '创建时间';
+COMMENT ON COLUMN lis_change_log.update_by IS '修改人';
+COMMENT ON COLUMN lis_change_log.update_time IS '修改时间';
+COMMENT ON COLUMN lis_change_log.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_change_log.serial_no IS '日志ID';
 COMMENT ON COLUMN lis_change_log.module_type IS '操作模块类型';
 COMMENT ON COLUMN lis_change_log.change_type IS '日志类型';
@@ -457,9 +568,21 @@ CREATE TABLE lis_change_log_micro (
   change_person VARCHAR(255),
   change_time VARCHAR(255),
   change_where VARCHAR(255),
-  change_content VARCHAR(255)
+  change_content VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_change_log_micro IS '微生物系统修改日志表';
+COMMENT ON COLUMN lis_change_log_micro.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_change_log_micro.create_by IS '创建人';
+COMMENT ON COLUMN lis_change_log_micro.create_time IS '创建时间';
+COMMENT ON COLUMN lis_change_log_micro.update_by IS '修改人';
+COMMENT ON COLUMN lis_change_log_micro.update_time IS '修改时间';
+COMMENT ON COLUMN lis_change_log_micro.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_change_log_micro.id IS '日志ID';
 COMMENT ON COLUMN lis_change_log_micro.change_id IS '诊疗项目代码';
 COMMENT ON COLUMN lis_change_log_micro.change_soft IS '修改模块';
@@ -501,9 +624,21 @@ CREATE TABLE lis_charge_item (
   save_term VARCHAR(255),
   group_id BIGINT,
   tjxmbh VARCHAR(255),
-  number_print VARCHAR(255)
+  number_print VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_charge_item IS '诊疗项目对照项目表';
+COMMENT ON COLUMN lis_charge_item.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_charge_item.create_by IS '创建人';
+COMMENT ON COLUMN lis_charge_item.create_time IS '创建时间';
+COMMENT ON COLUMN lis_charge_item.update_by IS '修改人';
+COMMENT ON COLUMN lis_charge_item.update_time IS '修改时间';
+COMMENT ON COLUMN lis_charge_item.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_charge_item.charge_item_id IS '诊疗项目ID';
 COMMENT ON COLUMN lis_charge_item.chinese_name IS '诊疗项目名称';
 COMMENT ON COLUMN lis_charge_item.chinese_name_short IS '诊疗项目简称';
@@ -542,9 +677,21 @@ CREATE TABLE lis_charge_item_charge (
   charge_class VARCHAR(255),
   his_id BIGINT,
   charge_name VARCHAR(255),
-  charge VARCHAR(255)
+  charge VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_charge_item_charge IS '收费项目收费明细';
+COMMENT ON COLUMN lis_charge_item_charge.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_charge_item_charge.create_by IS '创建人';
+COMMENT ON COLUMN lis_charge_item_charge.create_time IS '创建时间';
+COMMENT ON COLUMN lis_charge_item_charge.update_by IS '修改人';
+COMMENT ON COLUMN lis_charge_item_charge.update_time IS '修改时间';
+COMMENT ON COLUMN lis_charge_item_charge.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_charge_item_charge.charge_class IS '收费类型';
 COMMENT ON COLUMN lis_charge_item_charge.his_id IS 'HIS代码';
 COMMENT ON COLUMN lis_charge_item_charge.charge_name IS '收费名称';
@@ -556,9 +703,21 @@ CREATE TABLE lis_charge_item_inspectiontime (
   patient_type VARCHAR(255),
   id VARCHAR(255),
   charge_item_id BIGINT,
-  inspection_time VARCHAR(255)
+  inspection_time VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_charge_item_inspectiontime IS '诊疗项目检验时间';
+COMMENT ON COLUMN lis_charge_item_inspectiontime.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_charge_item_inspectiontime.create_by IS '创建人';
+COMMENT ON COLUMN lis_charge_item_inspectiontime.create_time IS '创建时间';
+COMMENT ON COLUMN lis_charge_item_inspectiontime.update_by IS '修改人';
+COMMENT ON COLUMN lis_charge_item_inspectiontime.update_time IS '修改时间';
+COMMENT ON COLUMN lis_charge_item_inspectiontime.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_charge_item_inspectiontime.time_type IS '超时类型';
 COMMENT ON COLUMN lis_charge_item_inspectiontime.patient_type IS '病人类型';
 COMMENT ON COLUMN lis_charge_item_inspectiontime.id IS '主键';
@@ -574,9 +733,21 @@ CREATE TABLE lis_charge_item_reporttime (
   report_time VARCHAR(255),
   from_date VARCHAR(255),
   to_date VARCHAR(255),
-  id VARCHAR(255)
+  id VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_charge_item_reporttime IS '诊疗项目报告时间';
+COMMENT ON COLUMN lis_charge_item_reporttime.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_charge_item_reporttime.create_by IS '创建人';
+COMMENT ON COLUMN lis_charge_item_reporttime.create_time IS '创建时间';
+COMMENT ON COLUMN lis_charge_item_reporttime.update_by IS '修改人';
+COMMENT ON COLUMN lis_charge_item_reporttime.update_time IS '修改时间';
+COMMENT ON COLUMN lis_charge_item_reporttime.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_charge_item_reporttime.charge_item_id IS '诊疗项目ID';
 COMMENT ON COLUMN lis_charge_item_reporttime.from_time IS '开始时间';
 COMMENT ON COLUMN lis_charge_item_reporttime.to_time IS '结束时间';
@@ -588,45 +759,71 @@ COMMENT ON COLUMN lis_charge_item_reporttime.id IS '主键';
 
 -- 表: lis_comm_instrument (lis_comm_instrument)
 CREATE TABLE lis_comm_instrument (
-  instrument_id BIGINT,
-  instrument_name VARCHAR(255),
-  instrument_key_date VARCHAR(255),
-  instrument_type VARCHAR(255),
-  interface_name VARCHAR(255),
-  interface_type VARCHAR(255),
-  instrument_commport VARCHAR(255),
-  instrument_key VARCHAR(255)
+  instrument_id VARCHAR(20),
+  instrument_name VARCHAR(50),
+  instrument_commport VARCHAR(10),
+  instrument_key VARCHAR(20),
+  instrument_key_date TIMESTAMP,
+  instrument_type VARCHAR(20),
+  interface_name VARCHAR(50),
+  interface_type VARCHAR(10),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_comm_instrument IS '仪器表';
+COMMENT ON COLUMN lis_comm_instrument.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_comm_instrument.create_by IS '创建人';
+COMMENT ON COLUMN lis_comm_instrument.create_time IS '创建时间';
+COMMENT ON COLUMN lis_comm_instrument.update_by IS '修改人';
+COMMENT ON COLUMN lis_comm_instrument.update_time IS '修改时间';
+COMMENT ON COLUMN lis_comm_instrument.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_comm_instrument.instrument_id IS '仪器代码';
 COMMENT ON COLUMN lis_comm_instrument.instrument_name IS '仪器名称';
+COMMENT ON COLUMN lis_comm_instrument.instrument_commport IS '端口配置';
+COMMENT ON COLUMN lis_comm_instrument.instrument_key IS 'key';
 COMMENT ON COLUMN lis_comm_instrument.instrument_key_date IS '注册时间';
 COMMENT ON COLUMN lis_comm_instrument.instrument_type IS '仪器类型';
 COMMENT ON COLUMN lis_comm_instrument.interface_name IS '接口程序';
 COMMENT ON COLUMN lis_comm_instrument.interface_type IS '通讯方式';
-COMMENT ON COLUMN lis_comm_instrument.instrument_commport IS '端口配置';
-COMMENT ON COLUMN lis_comm_instrument.instrument_key IS 'key';
 
 -- 表: lis_inspection_group (检验分组信息表)
 CREATE TABLE lis_inspection_group (
-  group_id BIGINT,
-  group_code VARCHAR(255),
-  group_sort VARCHAR(255),
-  group_name VARCHAR(255),
-  inspection_dept VARCHAR(255),
-  group_class VARCHAR(255),
-  lis_id VARCHAR(255),
-  test_item_append VARCHAR(255),
-  start_no VARCHAR(255),
-  start_focus VARCHAR(255),
-  result_review VARCHAR(255),
-  same_group VARCHAR(255),
-  graph_format VARCHAR(255),
-  graph_switch_file VARCHAR(255),
-  state_flag VARCHAR(255),
-  default_result VARCHAR(255)
+  group_id VARCHAR(10) NOT NULL,
+  group_code VARCHAR(20),
+  group_sort VARCHAR(20),
+  group_name VARCHAR(50),
+  inspection_dept VARCHAR(20),
+  group_class VARCHAR(20),
+  lis_id VARCHAR(20),
+  test_item_append VARCHAR(20),
+  item_display VARCHAR(20),
+  start_no VARCHAR(2),
+  start_focus VARCHAR(20),
+  result_review VARCHAR(20),
+  same_group VARCHAR(100),
+  graph_format VARCHAR(50),
+  graph_switch_file VARCHAR(50),
+  state_flag VARCHAR(2),
+  default_result VARCHAR(50),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20),
+  PRIMARY KEY (group_id)
 );
 COMMENT ON TABLE lis_inspection_group IS '检验分组信息表';
+COMMENT ON COLUMN lis_inspection_group.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_inspection_group.create_by IS '创建人';
+COMMENT ON COLUMN lis_inspection_group.create_time IS '创建时间';
+COMMENT ON COLUMN lis_inspection_group.update_by IS '修改人';
+COMMENT ON COLUMN lis_inspection_group.update_time IS '修改时间';
+COMMENT ON COLUMN lis_inspection_group.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_inspection_group.group_id IS '分组ID';
 COMMENT ON COLUMN lis_inspection_group.group_code IS '分组代码';
 COMMENT ON COLUMN lis_inspection_group.group_sort IS '排序号';
@@ -635,6 +832,7 @@ COMMENT ON COLUMN lis_inspection_group.inspection_dept IS '检验科室';
 COMMENT ON COLUMN lis_inspection_group.group_class IS '分组类型';
 COMMENT ON COLUMN lis_inspection_group.lis_id IS '老系统代码';
 COMMENT ON COLUMN lis_inspection_group.test_item_append IS '项目显示格式';
+COMMENT ON COLUMN lis_inspection_group.item_display IS '项目显示';
 COMMENT ON COLUMN lis_inspection_group.start_no IS '起诉样本号';
 COMMENT ON COLUMN lis_inspection_group.start_focus IS '开始焦点';
 COMMENT ON COLUMN lis_inspection_group.result_review IS '回顾条件设置';
@@ -653,9 +851,21 @@ CREATE TABLE lis_inspection_report (
   report_title VARCHAR(255),
   create_time VARCHAR(255),
   create_person VARCHAR(255),
-  inspection_class VARCHAR(255)
+  inspection_class VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_inspection_report IS '检验报告单信息表';
+COMMENT ON COLUMN lis_inspection_report.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_inspection_report.create_by IS '创建人';
+COMMENT ON COLUMN lis_inspection_report.create_time IS '创建时间';
+COMMENT ON COLUMN lis_inspection_report.update_by IS '修改人';
+COMMENT ON COLUMN lis_inspection_report.update_time IS '修改时间';
+COMMENT ON COLUMN lis_inspection_report.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_inspection_report.inspection_id IS '检验单ID';
 COMMENT ON COLUMN lis_inspection_report.report_id IS '报告序号（页码）';
 COMMENT ON COLUMN lis_inspection_report.report_format IS '报告单模板';
@@ -696,9 +906,21 @@ CREATE TABLE lis_inspection_result (
   check_time VARCHAR(255),
   result_type VARCHAR(255),
   test_method VARCHAR(255),
-  read_doctor VARCHAR(255)
+  read_doctor VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_inspection_result IS '常规检验结果表';
+COMMENT ON COLUMN lis_inspection_result.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_inspection_result.create_by IS '创建人';
+COMMENT ON COLUMN lis_inspection_result.create_time IS '创建时间';
+COMMENT ON COLUMN lis_inspection_result.update_by IS '修改人';
+COMMENT ON COLUMN lis_inspection_result.update_time IS '修改时间';
+COMMENT ON COLUMN lis_inspection_result.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_inspection_result.inspection_id IS '检验单ID';
 COMMENT ON COLUMN lis_inspection_result.test_item_id IS '项目代码';
 COMMENT ON COLUMN lis_inspection_result.group_id IS '分组ID';
@@ -755,9 +977,21 @@ CREATE TABLE lis_inspection_result_micro (
   remark VARCHAR(255),
   esbl VARCHAR(255),
   read_doctor VARCHAR(255),
-  report_id VARCHAR(255)
+  report_id VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_inspection_result_micro IS '微生物检验结果表';
+COMMENT ON COLUMN lis_inspection_result_micro.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_inspection_result_micro.create_by IS '创建人';
+COMMENT ON COLUMN lis_inspection_result_micro.create_time IS '创建时间';
+COMMENT ON COLUMN lis_inspection_result_micro.update_by IS '修改人';
+COMMENT ON COLUMN lis_inspection_result_micro.update_time IS '修改时间';
+COMMENT ON COLUMN lis_inspection_result_micro.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_inspection_result_micro.inspection_id IS '检验单ID';
 COMMENT ON COLUMN lis_inspection_result_micro.group_id IS '分组ID';
 COMMENT ON COLUMN lis_inspection_result_micro.inspection_date IS '检验日期';
@@ -866,9 +1100,21 @@ CREATE TABLE lis_inspection_sample (
   police_state VARCHAR(255),
   readed_state VARCHAR(255),
   police_time VARCHAR(255),
-  police_person VARCHAR(255)
+  police_person VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_inspection_sample IS '样本信息表（主表）';
+COMMENT ON COLUMN lis_inspection_sample.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_inspection_sample.create_by IS '创建人';
+COMMENT ON COLUMN lis_inspection_sample.create_time IS '创建时间';
+COMMENT ON COLUMN lis_inspection_sample.update_by IS '修改人';
+COMMENT ON COLUMN lis_inspection_sample.update_time IS '修改时间';
+COMMENT ON COLUMN lis_inspection_sample.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_inspection_sample.inspection_id IS '检验单ID';
 COMMENT ON COLUMN lis_inspection_sample.group_id IS '分组ID';
 COMMENT ON COLUMN lis_inspection_sample.inspection_date IS '检验日期（样本编号时自动生成）';
@@ -968,9 +1214,21 @@ CREATE TABLE lis_inspection_sample_charge (
   charge_state VARCHAR(255),
   charge_type VARCHAR(255),
   his_id BIGINT,
-  charge_num VARCHAR(255)
+  charge_num VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_inspection_sample_charge IS '标本收费记录表';
+COMMENT ON COLUMN lis_inspection_sample_charge.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_inspection_sample_charge.create_by IS '创建人';
+COMMENT ON COLUMN lis_inspection_sample_charge.create_time IS '创建时间';
+COMMENT ON COLUMN lis_inspection_sample_charge.update_by IS '修改人';
+COMMENT ON COLUMN lis_inspection_sample_charge.update_time IS '修改时间';
+COMMENT ON COLUMN lis_inspection_sample_charge.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_inspection_sample_charge.sample_charge_id IS '收费ID';
 COMMENT ON COLUMN lis_inspection_sample_charge.requisition_id IS '申请单ID';
 COMMENT ON COLUMN lis_inspection_sample_charge.inspection_id IS '检验单ID';
@@ -991,9 +1249,21 @@ COMMENT ON COLUMN lis_inspection_sample_charge.charge_num IS '备用字段';
 CREATE TABLE lis_inspection_sample_explain (
   inspection_id BIGINT,
   explain_id VARCHAR(255),
-  explain VARCHAR(255)
+  explain VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_inspection_sample_explain IS '备注信息表';
+COMMENT ON COLUMN lis_inspection_sample_explain.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_inspection_sample_explain.create_by IS '创建人';
+COMMENT ON COLUMN lis_inspection_sample_explain.create_time IS '创建时间';
+COMMENT ON COLUMN lis_inspection_sample_explain.update_by IS '修改人';
+COMMENT ON COLUMN lis_inspection_sample_explain.update_time IS '修改时间';
+COMMENT ON COLUMN lis_inspection_sample_explain.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_inspection_sample_explain.inspection_id IS '检验单ID';
 COMMENT ON COLUMN lis_inspection_sample_explain.explain_id IS '解释ID，跟lis_base_data关联';
 COMMENT ON COLUMN lis_inspection_sample_explain.explain IS '结果解释';
@@ -1004,9 +1274,21 @@ CREATE TABLE lis_inspection_sample_graph (
   inspection_date VARCHAR(255),
   inspection_instrument VARCHAR(255),
   graph_format VARCHAR(255),
-  remark VARCHAR(255)
+  remark VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_inspection_sample_graph IS '样本图形信息表';
+COMMENT ON COLUMN lis_inspection_sample_graph.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_inspection_sample_graph.create_by IS '创建人';
+COMMENT ON COLUMN lis_inspection_sample_graph.create_time IS '创建时间';
+COMMENT ON COLUMN lis_inspection_sample_graph.update_by IS '修改人';
+COMMENT ON COLUMN lis_inspection_sample_graph.update_time IS '修改时间';
+COMMENT ON COLUMN lis_inspection_sample_graph.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_inspection_sample_graph.inspection_id IS '检验单ID';
 COMMENT ON COLUMN lis_inspection_sample_graph.inspection_date IS '检验日期';
 COMMENT ON COLUMN lis_inspection_sample_graph.inspection_instrument IS '检验仪器';
@@ -1044,9 +1326,21 @@ CREATE TABLE lis_test_item (
   stroke_code VARCHAR(255),
   state_flag VARCHAR(255),
   standard_name VARCHAR(255),
-  pes_id VARCHAR(255)
+  pes_id VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_test_item IS '检验项目明细字典表';
+COMMENT ON COLUMN lis_test_item.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_test_item.create_by IS '创建人';
+COMMENT ON COLUMN lis_test_item.create_time IS '创建时间';
+COMMENT ON COLUMN lis_test_item.update_by IS '修改人';
+COMMENT ON COLUMN lis_test_item.update_time IS '修改时间';
+COMMENT ON COLUMN lis_test_item.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_test_item.test_item_id IS '项目ID';
 COMMENT ON COLUMN lis_test_item.test_item_code IS '项目代码';
 COMMENT ON COLUMN lis_test_item.test_item_sort IS '排序号';
@@ -1092,9 +1386,21 @@ CREATE TABLE lis_test_item_combination (
   custom_code VARCHAR(255),
   spell_code VARCHAR(255),
   stroke_code VARCHAR(255),
-  state_flag VARCHAR(255)
+  state_flag VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_test_item_combination IS '检验项目组合';
+COMMENT ON COLUMN lis_test_item_combination.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_test_item_combination.create_by IS '创建人';
+COMMENT ON COLUMN lis_test_item_combination.create_time IS '创建时间';
+COMMENT ON COLUMN lis_test_item_combination.update_by IS '修改人';
+COMMENT ON COLUMN lis_test_item_combination.update_time IS '修改时间';
+COMMENT ON COLUMN lis_test_item_combination.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_test_item_combination.serial_no IS '排序';
 COMMENT ON COLUMN lis_test_item_combination.combination_id IS '组合ID';
 COMMENT ON COLUMN lis_test_item_combination.combination_sort IS '排序号';
@@ -1121,9 +1427,21 @@ CREATE TABLE lis_test_item_group (
   spell_code VARCHAR(255),
   stroke_code VARCHAR(255),
   flag VARCHAR(255),
-  sample_class VARCHAR(255)
+  sample_class VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE lis_test_item_group IS '各仪器开展检验项目明细表';
+COMMENT ON COLUMN lis_test_item_group.create_dept IS '创建部门';
+COMMENT ON COLUMN lis_test_item_group.create_by IS '创建人';
+COMMENT ON COLUMN lis_test_item_group.create_time IS '创建时间';
+COMMENT ON COLUMN lis_test_item_group.update_by IS '修改人';
+COMMENT ON COLUMN lis_test_item_group.update_time IS '修改时间';
+COMMENT ON COLUMN lis_test_item_group.tenant_id IS '分院ID';
 COMMENT ON COLUMN lis_test_item_group.group_id IS '分组ID';
 COMMENT ON COLUMN lis_test_item_group.test_item_id IS '项目ID';
 COMMENT ON COLUMN lis_test_item_group.test_item_sort IS '排序';
@@ -1152,9 +1470,21 @@ CREATE TABLE sys_user (
   mobileno VARCHAR(255),
   ime_chinese_name VARCHAR(255),
   tmis_id VARCHAR(255),
-  id_card VARCHAR(255)
+  id_card VARCHAR(255),
+  create_dept BIGINT,
+  create_by BIGINT,
+  create_time TIMESTAMP,
+  update_by BIGINT,
+  update_time TIMESTAMP,
+  tenant_id VARCHAR(20)
 );
 COMMENT ON TABLE sys_user IS '用户信息表';
+COMMENT ON COLUMN sys_user.create_dept IS '创建部门';
+COMMENT ON COLUMN sys_user.create_by IS '创建人';
+COMMENT ON COLUMN sys_user.create_time IS '创建时间';
+COMMENT ON COLUMN sys_user.update_by IS '修改人';
+COMMENT ON COLUMN sys_user.update_time IS '修改时间';
+COMMENT ON COLUMN sys_user.tenant_id IS '分院ID';
 COMMENT ON COLUMN sys_user.user_no IS '用户id';
 COMMENT ON COLUMN sys_user.logid IS '登录名';
 COMMENT ON COLUMN sys_user.username IS '用户名称';
@@ -1170,3 +1500,97 @@ COMMENT ON COLUMN sys_user.mobileno IS '手机号码';
 COMMENT ON COLUMN sys_user.ime_chinese_name IS '输入法类型';
 COMMENT ON COLUMN sys_user.tmis_id IS '血站中心ID';
 COMMENT ON COLUMN sys_user.id_card IS '身份证号码';
+
+-- 仪器科室关联表
+CREATE TABLE lis_instrument_dept (
+  id BIGINT PRIMARY KEY,
+  instrument_id BIGINT NOT NULL,
+  dept_base_data_id BIGINT NOT NULL,
+  sort INTEGER,
+  state_flag VARCHAR(1) DEFAULT '1',
+  create_time TIMESTAMP,
+  create_person VARCHAR(100),
+  remark VARCHAR(500)
+);
+
+COMMENT ON TABLE lis_instrument_dept IS '仪器科室关联表';
+COMMENT ON COLUMN lis_instrument_dept.id IS '主键ID';
+COMMENT ON COLUMN lis_instrument_dept.instrument_id IS '仪器ID，关联lis_comm_instrument';
+COMMENT ON COLUMN lis_instrument_dept.dept_base_data_id IS '科室基础数据ID，关联lis_base_data';
+COMMENT ON COLUMN lis_instrument_dept.sort IS '排序号';
+COMMENT ON COLUMN lis_instrument_dept.state_flag IS '状态：1启用，0禁用';
+COMMENT ON COLUMN lis_instrument_dept.create_time IS '创建时间';
+COMMENT ON COLUMN lis_instrument_dept.create_person IS '创建人员';
+COMMENT ON COLUMN lis_instrument_dept.remark IS '备注';
+
+-- 仪器通道项目配置表（静态配置：仪器→通道→检验项目）
+CREATE TABLE lis_instrument_channel_item (
+  id BIGINT PRIMARY KEY,
+  instrument_id BIGINT NOT NULL,
+  channel_no VARCHAR(50) NOT NULL,
+  channel_name VARCHAR(100),
+  test_item_id BIGINT NOT NULL,
+  sample_class VARCHAR(50),
+  test_item_sort INTEGER,
+  default_result VARCHAR(500),
+  state_flag VARCHAR(1) DEFAULT '1',
+  create_time TIMESTAMP,
+  create_person VARCHAR(100),
+  modify_time TIMESTAMP,
+  modify_person VARCHAR(100),
+  remark VARCHAR(500)
+);
+
+COMMENT ON TABLE lis_instrument_channel_item IS '仪器通道项目配置表';
+COMMENT ON COLUMN lis_instrument_channel_item.id IS '主键ID';
+COMMENT ON COLUMN lis_instrument_channel_item.instrument_id IS '仪器ID，关联lis_comm_instrument';
+COMMENT ON COLUMN lis_instrument_channel_item.channel_no IS '通道号';
+COMMENT ON COLUMN lis_instrument_channel_item.channel_name IS '通道名称';
+COMMENT ON COLUMN lis_instrument_channel_item.test_item_id IS '检验项目ID，关联lis_test_item';
+COMMENT ON COLUMN lis_instrument_channel_item.sample_class IS '标本类型代码';
+COMMENT ON COLUMN lis_instrument_channel_item.test_item_sort IS '项目排序号';
+COMMENT ON COLUMN lis_instrument_channel_item.default_result IS '默认结果';
+COMMENT ON COLUMN lis_instrument_channel_item.state_flag IS '状态：1启用，0禁用';
+COMMENT ON COLUMN lis_instrument_channel_item.create_time IS '创建时间';
+COMMENT ON COLUMN lis_instrument_channel_item.create_person IS '创建人员';
+COMMENT ON COLUMN lis_instrument_channel_item.modify_time IS '修改时间';
+COMMENT ON COLUMN lis_instrument_channel_item.modify_person IS '修改人员';
+COMMENT ON COLUMN lis_instrument_channel_item.remark IS '备注';
+
+-- 联合唯一索引：同一仪器同一通道同一项目只能有一条配置
+CREATE UNIQUE INDEX idx_instrument_channel_item_unique 
+ON lis_instrument_channel_item(instrument_id, channel_no, test_item_id);
+
+-- 索引：按仪器查询
+CREATE INDEX idx_instrument_channel_item_instrument 
+ON lis_instrument_channel_item(instrument_id);
+
+-- 索引：按检验项目查询
+CREATE INDEX idx_instrument_channel_item_testitem 
+ON lis_instrument_channel_item(test_item_id);
+
+-- 诊疗项目分组关联表（支持多对多）
+CREATE TABLE lis_charge_item_group_rel (
+  id BIGINT PRIMARY KEY,
+  charge_item_id BIGINT NOT NULL,
+  group_id BIGINT NOT NULL,
+  sort INTEGER,
+  state_flag VARCHAR(1) DEFAULT '1',
+  create_time TIMESTAMP,
+  create_person VARCHAR(100),
+  remark VARCHAR(500)
+);
+
+COMMENT ON TABLE lis_charge_item_group_rel IS '诊疗项目分组关联表';
+COMMENT ON COLUMN lis_charge_item_group_rel.id IS '主键ID';
+COMMENT ON COLUMN lis_charge_item_group_rel.charge_item_id IS '诊疗项目ID，关联lis_charge_item';
+COMMENT ON COLUMN lis_charge_item_group_rel.group_id IS '检验分组ID，关联lis_inspection_group';
+COMMENT ON COLUMN lis_charge_item_group_rel.sort IS '排序号';
+COMMENT ON COLUMN lis_charge_item_group_rel.state_flag IS '状态：1启用，0禁用';
+COMMENT ON COLUMN lis_charge_item_group_rel.create_time IS '创建时间';
+COMMENT ON COLUMN lis_charge_item_group_rel.create_person IS '创建人员';
+COMMENT ON COLUMN lis_charge_item_group_rel.remark IS '备注';
+
+-- 联合唯一索引
+CREATE UNIQUE INDEX idx_charge_item_group_unique 
+ON lis_charge_item_group_rel(charge_item_id, group_id);
