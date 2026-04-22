@@ -21,6 +21,7 @@ erDiagram
         string instrument_name "仪器名称"
         string instrument_type "仪器类型"
         string interface_name "接口程序"
+        string deptId "科室ID"
         string instrument_commport "端口配置"
     }
 
@@ -90,16 +91,7 @@ erDiagram
         string his_id PK "收费项目HIS代码"
     }
 
-    %% 仪器 → 科室（需新建，现有表无直接关联）
-    仪器科室关联 {
-        bigint instrument_id PK
-        bigint dept_base_data_id PK
-    }
-
     %% ========== 关系定义 ==========
-    
-    lis_base_data ||--o{ 仪器科室关联 : "拥有 (class_id=科室)"
-    lis_comm_instrument ||--o{ 仪器科室关联 : "归属于"
 
     lis_comm_instrument ||--o{ 仪器通道项目表 : "配置通道项目"
     lis_test_item ||--o{ 仪器通道项目表 : "被配置到通道"
@@ -130,8 +122,7 @@ erDiagram
 | 分组-检验项目 | `lis_test_item_group` | ✅ 现有 | 仪器开展项目明细 |
 | 诊疗项目-分组 | `lis_charge_item.group_id` | ✅ 现有 | 字段关联，无中间表 |
 | 诊疗项目-收费 | `lis_charge_item.his_id` ↔ `lis_charge_item_charge.his_id` | ✅ 现有 | 通过 his_id 关联 |
-| 仪器-科室 | 无 | ❌ 建议新建 | `instrument_dept_rel` |
-| 仪器-通道-项目 | 无 | ❌ 建议新建 | `instrument_channel_item` |
+| 仪器-科室 | `lis_comm_instrument.deptId` | ✅ 现有 | 直接字段关联 |
 
 ---
 
@@ -150,10 +141,8 @@ erDiagram
 ├── lis_test_item_group    (分组 → 检验项目) ✅ 现有
 ├── 诊疗项目分组关联        (诊疗项目 → 分组) 📌 通过 group_id 字段
 ├── 诊疗项目收费关联        (诊疗项目 → 收费) 📌 通过 his_id 字段
-├── 仪器科室关联           (仪器 → 科室) ❌ 建议新建
+├── 仪器科室关联           (仪器 → 科室) ✅ 通过 deptId 字段
 └── 仪器通道项目表         (仪器 → 通道 → 项目) ❌ 建议新建
 ```
 
 ---
-
-需要我继续画出**业务操作部分**（`his_requisition`、`lis_inspection_sample`、`lis_inspection_result` 等）的 ER 图吗？

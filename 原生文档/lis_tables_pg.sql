@@ -790,6 +790,7 @@ COMMENT ON COLUMN lis_charge_item_reporttime.id IS '主键';
 CREATE TABLE lis_comm_instrument (
   instrument_id VARCHAR(20),
   instrument_name VARCHAR(50),
+  dept_id VARCHAR(50),
   instrument_commport VARCHAR(10),
   instrument_key VARCHAR(20),
   instrument_key_date TIMESTAMP,
@@ -1451,6 +1452,7 @@ COMMENT ON COLUMN lis_test_item_combination.state_flag IS '状态';
 
 -- 表: lis_test_item_group (各仪器开展检验项目明细表)
 CREATE TABLE lis_test_item_group (
+  test_group_id BIGINT,
   group_id BIGINT,
   test_item_id BIGINT,
   test_item_sort VARCHAR(255),
@@ -1467,7 +1469,8 @@ CREATE TABLE lis_test_item_group (
   create_time TIMESTAMP,
   update_by BIGINT,
   update_time TIMESTAMP,
-  tenant_id VARCHAR(20)
+  tenant_id VARCHAR(20),
+  PRIMARY (test_group_id)
 );
 COMMENT ON TABLE lis_test_item_group IS '各仪器开展检验项目明细表';
 COMMENT ON COLUMN lis_test_item_group.create_dept IS '创建部门';
@@ -1534,74 +1537,6 @@ COMMENT ON COLUMN sys_user.mobileno IS '手机号码';
 COMMENT ON COLUMN sys_user.ime_chinese_name IS '输入法类型';
 COMMENT ON COLUMN sys_user.tmis_id IS '血站中心ID';
 COMMENT ON COLUMN sys_user.id_card IS '身份证号码';
-
--- 仪器科室关联表
-CREATE TABLE lis_instrument_dept (
-  id BIGINT PRIMARY KEY,
-  instrument_id BIGINT NOT NULL,
-  dept_base_data_id BIGINT NOT NULL,
-  sort INTEGER,
-  state_flag VARCHAR(1) DEFAULT '1',
-  create_time TIMESTAMP,
-  create_person VARCHAR(100),
-  remark VARCHAR(500)
-);
-
-COMMENT ON TABLE lis_instrument_dept IS '仪器科室关联表';
-COMMENT ON COLUMN lis_instrument_dept.id IS '主键ID';
-COMMENT ON COLUMN lis_instrument_dept.instrument_id IS '仪器ID，关联lis_comm_instrument';
-COMMENT ON COLUMN lis_instrument_dept.dept_base_data_id IS '科室基础数据ID，关联lis_base_data';
-COMMENT ON COLUMN lis_instrument_dept.sort IS '排序号';
-COMMENT ON COLUMN lis_instrument_dept.state_flag IS '状态：1启用，0禁用';
-COMMENT ON COLUMN lis_instrument_dept.create_time IS '创建时间';
-COMMENT ON COLUMN lis_instrument_dept.create_person IS '创建人员';
-COMMENT ON COLUMN lis_instrument_dept.remark IS '备注';
-
--- 仪器通道项目配置表（静态配置：仪器→通道→检验项目）
-CREATE TABLE lis_instrument_channel_item (
-  id BIGINT PRIMARY KEY,
-  instrument_id BIGINT NOT NULL,
-  channel_no VARCHAR(50) NOT NULL,
-  channel_name VARCHAR(100),
-  test_item_id BIGINT NOT NULL,
-  sample_class VARCHAR(50),
-  test_item_sort INTEGER,
-  default_result VARCHAR(500),
-  state_flag VARCHAR(1) DEFAULT '1',
-  create_time TIMESTAMP,
-  create_person VARCHAR(100),
-  modify_time TIMESTAMP,
-  modify_person VARCHAR(100),
-  remark VARCHAR(500)
-);
-
-COMMENT ON TABLE lis_instrument_channel_item IS '仪器通道项目配置表';
-COMMENT ON COLUMN lis_instrument_channel_item.id IS '主键ID';
-COMMENT ON COLUMN lis_instrument_channel_item.instrument_id IS '仪器ID，关联lis_comm_instrument';
-COMMENT ON COLUMN lis_instrument_channel_item.channel_no IS '通道号';
-COMMENT ON COLUMN lis_instrument_channel_item.channel_name IS '通道名称';
-COMMENT ON COLUMN lis_instrument_channel_item.test_item_id IS '检验项目ID，关联lis_test_item';
-COMMENT ON COLUMN lis_instrument_channel_item.sample_class IS '标本类型代码';
-COMMENT ON COLUMN lis_instrument_channel_item.test_item_sort IS '项目排序号';
-COMMENT ON COLUMN lis_instrument_channel_item.default_result IS '默认结果';
-COMMENT ON COLUMN lis_instrument_channel_item.state_flag IS '状态：1启用，0禁用';
-COMMENT ON COLUMN lis_instrument_channel_item.create_time IS '创建时间';
-COMMENT ON COLUMN lis_instrument_channel_item.create_person IS '创建人员';
-COMMENT ON COLUMN lis_instrument_channel_item.modify_time IS '修改时间';
-COMMENT ON COLUMN lis_instrument_channel_item.modify_person IS '修改人员';
-COMMENT ON COLUMN lis_instrument_channel_item.remark IS '备注';
-
--- 联合唯一索引：同一仪器同一通道同一项目只能有一条配置
-CREATE UNIQUE INDEX idx_instrument_channel_item_unique 
-ON lis_instrument_channel_item(instrument_id, channel_no, test_item_id);
-
--- 索引：按仪器查询
-CREATE INDEX idx_instrument_channel_item_instrument 
-ON lis_instrument_channel_item(instrument_id);
-
--- 索引：按检验项目查询
-CREATE INDEX idx_instrument_channel_item_testitem 
-ON lis_instrument_channel_item(test_item_id);
 
 -- 诊疗项目分组关联表（支持多对多）
 CREATE TABLE lis_charge_item_group_rel (
