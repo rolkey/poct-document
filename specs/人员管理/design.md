@@ -123,6 +123,12 @@ his-modules/
   url: jdbc:mysql://192.168.168.128:3306/ry-cloud
   user: ruoyi
   password: Ruoyi@111
+
+数据库连接参数2：
+  url: jdbc:postgresql://192.168.168.128:5432/postgres
+  user: postgres
+  password: root
+  driver-class-name: org.postgresql.Driver
 ```
 
 ### 5.1 实体关系 (ER)
