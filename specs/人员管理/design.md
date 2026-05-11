@@ -13,6 +13,7 @@
 | 1.0.0 | 2026-05-04 | 马海军 | 初稿 |
 | 1.1.0 | 2026-05-04 | 马海军 | 补充试卷、试卷题目关联表，完善考核管理数据模型 |
 | 1.2.0 | 2026-05-04 | 马海军 | 引入考核预选机制：考核合格→预选→管理者确认→正式授权 |
+| 1.3.0 | 2026-05-07 | Sisyphus | 完善前后端交互流程，对齐已实现的12模块CRUD，补充Vue视图、API调用、前后端数据流 |
 
 ## 2. 执行摘要
 
@@ -119,7 +120,7 @@ his-modules/
 ### 5.0 数据库连接
 
 ```yaml
-数据库连接参数：
+数据库连接参数1：
   url: jdbc:mysql://192.168.168.128:3306/ry-cloud
   user: ruoyi
   password: Ruoyi@111
@@ -764,7 +765,330 @@ flowchart LR
 | PUT | `/person/permission` | 编辑权限配置 |
 | DELETE | `/person/permission/{ids}` | 删除权限配置 |
 
-## 7. 业务逻辑关键流程
+## 7. 前后端交互详解
+
+### 7.1 通用CRUD交互流程
+
+所有12个模块遵循**完全一致的**前后端交互模式，以下以「人员基础信息」为例详述。
+
+#### 7.1.1 查询列表（Query List）
+
+```
+┌──────────────────────────────────────────────────────┐
+│ 前端 Vue (personInfo/index.vue)                     │
+│  1. onMounted() → 调用 getList()                         │
+│  2. getList() 设置 loading=true                          │
+│  3. 调用 API: listPersonInfo(queryParams.value)       │
+└────────────────┬──────────────────────────────────────┘
+                 │ axios request
+┌────────────────▼──────────────────────────────────────┐
+│ 前端 API (api/lis/person/personInfo/index.ts)         │
+│  4. return request({                                    │
+│       url: `/${hisPerson()}/personInfo/list`,         │
+│       method: "get",                                 │
+│       params: query                                  │
+│     })                                                  │
+└────────────────┬──────────────────────────────────────┘
+                 │ HTTP GET
+┌────────────────▼──────────────────────────────────────┐
+│ 后端 Controller (PersonInfoController.java)                │
+│  5. @GetMapping("/list")                             │
+│     public TableDataInfo<PersonInfoVo> list(              │
+│         PersonInfoBo bo, PageQuery pageQuery) {          │
+│  6. return personInfoService.queryPageList(bo, pageQuery) │
+│     }                                                  │
+└────────────────┬──────────────────────────────────────┘
+                 │
+┌────────────────▼──────────────────────────────────────┐
+│ 后端 Service (PersonInfoServiceImpl.java)                 │
+│  7. public TableDataInfo<PersonInfoVo> queryPageList(  │
+│         PersonInfoBo bo, PageQuery pageQuery) {          │
+│  8. LambdaQueryWrapper<PersonInfo> lqw =            │
+│         buildQueryWrapper(bo);                        │
+│  9. Page<PersonInfoVo> result =                  │
+│         baseMapper.selectVoPage(                       │
+│             pageQuery.build(), lqw);                   │
+│  10. return TableDataInfo.build(result);               │
+│     }                                                  │
+└────────────────┬──────────────────────────────────────┘
+                 │ MyBatis-Plus
+┌────────────────▼──────────────────────────────────────┐
+│ 数据库 (his_person_info 表)                          │
+│  11. SELECT * FROM his_person_info                  │
+│      WHERE ... ORDER BY ... LIMIT ?,?               │
+│  12. 返回 PersonInfoVo 列表 + total                  │
+└────────────────┬──────────────────────────────────────┘
+                 │ JSON response
+┌────────────────▼──────────────────────────────────────┐
+│ 前端 Vue                                          │
+│  13. personInfoList.value = res.rows                    │
+│  14. total.value = res.total                          │
+│  15. loading=false，表格渲染                          │
+└──────────────────────────────────────────────────────┘
+```
+
+**搜索字段**：工号(empNo)、姓名(personName)、出生日期范围(birthDate)、科室(deptId)、职称(postId)、学历(education)、专业(major)、电话(phone)
+
+#### 7.1.2 新增记录（Add）
+
+```
+┌──────────────────────────────────────────────────────┐
+│ 前端 Vue                                           │
+│  1. 点击「新增」按钮 → handleAdd()                         │
+│  2. reset() 重置表单，dialog.visible=true                    │
+│  3. dialog标题设为「添加人员基础信息」                      │
+│  4. 用户填写表单（工号*、姓名*、性别、出生日期等）    │
+│  5. 点击「确定」 → submitForm()                          │
+│  6. personInfoFormRef.validate() 校验通过                   │
+│  7. 调用 API: addPersonInfo(form.value)               │
+└────────────────┬──────────────────────────────────────┘
+                 │
+┌────────────────▼──────────────────────────────────────┐
+│ 前端 API                                           │
+│  8. return request({                                    │
+│       url: `/${hisPerson()}/personInfo`,               │
+│       method: "post",                                │
+│       data: form                                    │
+│     })                                                  │
+└────────────────┬──────────────────────────────────────┘
+                 │ HTTP POST
+┌────────────────▼──────────────────────────────────────┐
+│ 后端 Controller                                    │
+│  9. @PostMapping("")                                │
+│     public R<Void> add(@Validated(AddGroup) @RequestBody  │
+│                           PersonInfoBo bo) {           │
+│  10. return toAjax(personInfoService.insertByBo(bo))     │
+│     }                                                  │
+└────────────────┬──────────────────────────────────────┘
+                 │
+┌────────────────▼──────────────────────────────────────┐
+│ 后端 Service                                      │
+│  11. public Boolean insertByBo(PersonInfoBo bo) {         │
+│  12. PersonInfo add = MapstructUtils.convert(         │
+│             bo, PersonInfo.class);                     │
+│  13. validEntityBeforeSave(add);                      │
+│  14. boolean flag = baseMapper.insert(add) > 0;          │
+│  15. if (flag) bo.setPersonId(add.getPersonId());    │
+│  16. return flag;                                      │
+│     }                                                  │
+└────────────────┬──────────────────────────────────────┘
+                 │ MyBatis-Plus
+┌────────────────▼──────────────────────────────────────┐
+│ 数据库                                            │
+│  17. INSERT INTO his_person_info VALUES (...)            │
+│  18. 生成 person_id（雪花算法）                          │
+└────────────────┬──────────────────────────────────────┘
+                 │ 响应
+┌────────────────▼──────────────────────────────────────┐
+│ 前端 Vue                                          │
+│  19. proxy.$modal.msgSuccess("操作成功")                  │
+│  20. dialog.visible=false                                │
+│  21. getList() 刷新表格                               │
+└──────────────────────────────────────────────────────┘
+```
+
+#### 7.1.3 修改记录（Edit）
+
+```
+1. 点击编辑图标 → handleUpdate(row)
+2. 调用 API: getPersonInfo(row.personId)
+3. 后端: GET /{hisPerson()}/personInfo/{personId}
+4. 返回 PersonInfoVo → 表单回填
+5. dialog 打开，标题「修改人员基础信息」
+6. 用户修改字段 → 点击「确定」
+7. submitForm() → updatePersonInfo(form.value)
+8. 后端: PUT /{hisPerson()}/personInfo
+9. Service: updateByBo() → baseMapper.updateById()
+10. 成功 → 关闭dialog → 刷新表格
+```
+
+#### 7.1.4 删除记录（Delete）
+
+```
+1. 选择行（checkbox）或点击删除图标
+2. handleDelete(row) → 弹出确认框
+3. 确认 → delPersonInfo(ids)
+4. 后端: DELETE /{hisPerson()}/personInfo/{ids}
+5. Service: deleteWithValidByIds(ids, true)
+6. Mapper: baseMapper.deleteByIds(ids)
+7. 成功 → msgSuccess → 刷新表格
+```
+
+#### 7.1.5 导出（Export）
+
+```
+1. 点击「导出」按钮 → handleExport()
+2. proxy.download(
+     `/his/personInfo/export`,  // 注意：目前硬编码his前缀
+     queryParams,
+     `personInfo_${new Date().getTime()}.xlsx`
+   )
+3. 后端: GET /personInfo/export
+4. Controller: ExcelUtil.exportExcel(list, "人员基础信息", PersonInfoVo.class, response)
+5. 浏览器下载 Excel 文件
+```
+
+### 7.2 模块交互差异对比
+
+| 模块 | 特殊字段 | 交互差异 |
+|------|----------|----------|
+| personInfo | userId（关联系统用户）、examStatus（考核状态） | 作为其他模块的查询入口，不建档案查询独立菜单 |
+| personCert | certFile（文件上传）、certStatus（自动计算到期状态） | 使用 `<file-upload>` 组件，定时任务扫描到期 |
+| personExam | answerSheet（JSON答题详情）、autoAuthorize（合格自动授权） | 考核达标自动设examStatus=预选，不自动生成授权 |
+| personExamPaper | strategy（JSON组卷策略）、generateType（自动/手动） | 自动组卷按strategy从题库抽题，生成试卷+题目关联 |
+| personExamQuestion | options（JSON选项）、difficulty（难度系数） | 题库维护，被试卷引用，停用不影响已生成试卷 |
+| personAuthorize | authStatus、approveBy（审批人） | 需先校验资质+考核状态，审批流两阶段（主管+质管） |
+| personAuthorizeItem | targetType（设备/项目）、targetId | 一条授权包含多个授权明细（设备/检验项目） |
+| personAuthorizeFlow | auditor1/auditor2（两级审批） | 审批流记录，flowStatus：待审核/已通过/已驳回 |
+| personTrainPlan | planType（年度/季度）、status（未开始/进行中/已结束） | 培训计划，关联多个培训记录 |
+| personTrainRecord | progress（%）、certGenerated（是否生成证书） | 签到时间、学习进度，合格自动生成证书 |
+| personRolePermission | operPerm（操作权限集合）、dataScope（数据范围） | 按角色或按人授权，权限矩阵控制报告操作 |
+| personTrainPlan | — | — |
+
+### 7.3 数据流总览
+
+```
+前端 Vue 视图 (src/views/person/*/index.vue)
+    ↓ (调用)
+前端 API 层 (src/api/lis/person/*/index.ts)
+    ↓ (HTTP请求，动态base URL = hisPerson())
+后端 Controller (his-module-person/controller/*Controller.java)
+    ↓ (委托)
+后端 Service (his-common-person/service/impl/*ServiceImpl.java)
+    ↓ (调用)
+后端 Mapper (his-common-person/mapper/*Mapper.java)
+    ↓ (SQL执行)
+数据库 (PostgreSQL his-lis 库，12张表)
+```
+
+**URL映射机制**：
+- 前端通过 `useServiceStore().apiUrl.hisPerson` 获取动态base URL
+- 开发环境：`/dev-api/his-person`（代理到 `http://localhost:端口`）
+- 生产环境：`/prod-api/his-person`（代理到 `http://his-person-rk:端口`）
+- Controller `@RequestMapping("/personInfo")` 定义端点路径
+- 完整URL：`{baseURL}/personInfo/list`
+
+### 7.4 定时任务联动
+
+| 定时任务 | 扫描表 | 触发条件 | 执行动作 |
+|-----------|--------|----------|----------|
+| 资质到期提醒 | his_person_cert | expire_date - 90天 ≤ 今天 | cert_status → "即将到期"，发送提醒 |
+| 资质到期停权 | his_person_cert | expire_date ≤ 今天 | cert_status → "已过期"，撤销关联授权 |
+| 授权到期检查 | his_person_authorize | end_date ≤ 今天 | auth_status → "已过期" |
+| 预选超时提醒 | his_person_info | exam_status=预选 AND DATEDIFF(NOW(), exam_date) > 30 | 提醒管理者处理 |
+
+---
+
+## 8. 前端路由与菜单映射
+
+### 8.1 菜单→路由→Vue文件映射表
+
+| 菜单名称（MySQL） | menu_id | path（菜单） | component（前端） | 实际Vue文件 |
+|-----------|---------|------|-----------|----------|
+| 人员基础信息 | 2051949043604566018 | personInfo | person/personInfo/index | views/person/personInfo/index.vue |
+| 资质证书 | 2051949175800639489 | personCert | person/personCert/index | views/person/personCert/index.vue |
+| 授权记录 | （在授权管理下） | personAuthorize | person/personAuthorize/index | views/person/personAuthorize/index.vue |
+| 授权明细 | （在授权管理下） | personAuthorizeItem | person/personAuthorizeItem/index | views/person/personAuthorizeItem/index.vue |
+| 授权审批流 | （在授权管理下） | personAuthorizeFlow | person/personAuthorizeFlow/index | views/person/personAuthorizeFlow/index.vue |
+| 考试记录 | （在考核管理下） | personExam | person/personExam/index | views/person/personExam/index.vue |
+| 题库 | （在考核管理下） | personExamQuestion | person/personExamQuestion/index | views/person/personExamQuestion/index.vue |
+| 试卷 | （在考核管理下） | personExamPaper | person/personExamPaper/index | views/person/personExamPaper/index.vue |
+| 试卷题目关联 | （在考核管理下） | personExamPaperQuestion | person/personExamPaperQuestion/index | views/person/personExamPaperQuestion/index.vue |
+| 培训计划 | （在培训管理下） | personTrainPlan | person/personTrainPlan/index | views/person/personTrainPlan/index.vue |
+| 培训记录 | （在培训管理下） | personTrainRecord | person/personTrainRecord/index | views/person/personTrainRecord/index.vue |
+| 报告权限管理 | 2051967262042140674 | personRolePermission | person/personRolePermission/index | views/person/personRolePermission/index.vue |
+
+### 8.2 路由加载机制
+
+```typescript
+// poct-ui-person/src/router/routerLoader.ts
+// 动态路由：从后端获取菜单，过滤出当前用户的权限路由
+export const loadPersonRoutes = async () => {
+  const menuList = await getRouters(); // 从 sys_menu 加载
+  const personRoutes = menuList.filter(m => m.component?.startsWith('person/'));
+  
+  personRoutes.forEach(route => {
+    router.addRoute('person', {
+      path: route.path,
+      name: route.menu_name,
+      component: () => import(`@/views/${route.component}.vue`),
+    });
+  });
+};
+```
+
+**关键**：`component` 字段（如 `person/personInfo/index`）被动态转换为 Vue 的懒加载组件路径 `@/views/person/personInfo/index.vue`。
+
+### 8.3 qiankun 微前端集成
+
+```
+主应用（qiankun shell）
+  ↓ registerMicroApps([{
+      name: 'person',
+      entry: '//localhost:10303',  // 或生产环境URL
+      container: '#subapp',
+      activeRule: '/person',
+    }])
+    
+子应用（poct-ui-person）
+  ↓ main.ts 中暴露生命周期
+    export async function bootstrap() { ... }
+    export async function mount(props) { ... }
+    export async function unmount() { ... }
+  ↓ vite.config.ts 中配置
+    server: { port: 10303, cors: true }
+    base: '/person'
+```
+
+---
+
+## 9. 权限体系详解
+
+### 9.1 权限映射全表
+
+| 菜单/按钮 | 后端 @SaCheckPermission | 前端 v-hasPermi | 菜单 perms（MySQL） |
+|-----------|----------------------|-------------------|-------------------|
+| 人员基础信息查询 | `person:info:list` | `['person:info:list']` | `person:info:list` |
+| 人员基础信息新增 | `person:info:add` | `['person:info:add']` | `person:info:add` |
+| 人员基础信息修改 | `person:info:edit` | `['person:info:edit']` | `person:info:edit` |
+| 人员基础信息删除 | `person:info:remove` | `['person:info:remove']` | `person:info:remove` |
+| 人员基础信息导出 | `person:info:export` | `['person:info:export']` | `person:info:export` |
+| 资质证书查询 | `his:personCert:list` | `['his:personCert:list']` | `his:personCert:list` |
+| 授权记录查询 | `his:personAuthorize:list` | `['his:personAuthorize:list']` | `his:personAuthorize:list` |
+| 考试记录查询 | `his:personExam:list` | `['his:personExam:list']` | `his:personExam:list` |
+| 题库查询 | `his:personExamQuestion:list` | `['his:personExamQuestion:list']` | `his:personExamQuestion:list` |
+| 试卷查询 | `his:personExamPaper:list` | `['his:personExamPaper:list']` | `his:personExamPaper:list` |
+| 试卷题目查询 | `his:personExamPaperQuestion:list` | `['his:personExamPaperQuestion:list']` | `his:personExamPaperQuestion:list` |
+| 培训计划查询 | `his:personTrainPlan:list` | `['his:personTrainPlan:list']` | `his:personTrainPlan:list` |
+| 培训记录查询 | `his:personTrainRecord:list` | `['his:personTrainRecord:list']` | `his:personTrainRecord:list` |
+| 报告权限查询 | `his:personRolePermission:list` | `['his:personRolePermission:list']` | `his:personRolePermission:list` |
+
+**注意**：前两个模块使用 `person:info:*` 前缀（无 `his:`），其余10个模块使用 `his:personXxx:*` 前缀。建议统一为一种。
+
+### 9.2 权限校验流程
+
+```
+用户登录
+  ↓ Sa-Token 校验登录态
+  ↓ 加载用户角色（sys_role）
+  ↓ 加载角色权限（sys_menu.perms）
+  ↓ 前端：v-hasPermi 指令控制按钮显隐
+  ↓ 后端：@SaCheckPermission 注解拦截请求
+  ↓ 无权限 → 返回 403 / 按钮不渲染
+```
+
+### 9.3 数据权限控制
+
+| 表 | 数据权限字段 | 控制方式 |
+|--------|----------|----------|
+| his_person_info | dept_id | 按科室隔离，仅本科室人员可见 |
+| his_person_authorize | person_id | 按人授权，仅被授权人可见 |
+| his_person_role_permission | dataScope（本科室/全院） | 角色级数据范围控制 |
+| his_person_exam | person_id | 仅考生本人可见 |
+
+---
+
+## 10. 业务逻辑关键流程
 
 ### 7.1 授权前置条件校验
 
